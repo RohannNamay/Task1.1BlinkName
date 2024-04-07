@@ -1,0 +1,52 @@
+// Define Morse code representation for each letter of your first name
+const String morseCode[] = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+
+// Define the pin numbers for the push button and the built-in LED
+const int buttonPin = 2;  // Change this to the pin where your push button is connected
+const int ledPin = LED_BUILTIN;
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == HIGH) {
+    // Button is pressed, blink name in Morse code
+    blinkNameInMorseCode();
+  }
+}
+
+void blinkNameInMorseCode() {
+  // Get your first name and convert it to uppercase
+  String firstName = "rohann"; // Replace "YOUR_NAME" with your actual first name
+  firstName.toUpperCase();
+
+  // Iterate over each character of the first name
+  for (int i = 0; i < firstName.length(); i++) {
+    char letter = firstName.charAt(i);
+
+    // Find Morse code representation for the current letter
+    String morse = morseCode[letter - 'A'];
+
+    // Blink LED according to Morse code representation
+    for (int j = 0; j < morse.length(); j++) {
+      if (morse.charAt(j) == '.') {
+        // Dot
+        digitalWrite(ledPin, HIGH);
+        delay(250);  // Change delay as needed
+        digitalWrite(ledPin, LOW);
+        delay(250);  // Change delay as needed
+      } else if (morse.charAt(j) == '-') {
+        // Dash
+        digitalWrite(ledPin, HIGH);
+        delay(750);  // Change delay as needed
+        digitalWrite(ledPin, LOW);
+        delay(250);  // Change delay as needed
+      }
+    }
+
+    // Add a small pause between letters
+    delay(500);  // Change delay as needed
+  }
+}
